@@ -1,2 +1,2 @@
 # busca-dev-api
-Hybrid mobile application with the objective to post and apply to system development projects.
+REST service to provide data throught http for BuscaDev mobile application.
