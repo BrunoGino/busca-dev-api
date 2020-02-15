@@ -4,15 +4,12 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 @Data
-public class ProfileSkillKey{
-    @Column(name = "PROFILE_ID")
-    private Long profileId;
+public class ProjectSkillKey {
+    @Column(name = "PROJECT_ID")
+    private Long projectId;
     @Column(name = "SKILL_ID")
     private Long skillId;
 }
-

@@ -1,35 +1,15 @@
 package br.com.buscadevapi.model;
 
+import lombok.Value;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
 @Entity
+@Value
 public class Skill {
     @Id
     private Long id;
     private String description;
-
-    public Skill() {
-    }
-
-    public Skill(Long id, String description) {
-        this.id = id;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

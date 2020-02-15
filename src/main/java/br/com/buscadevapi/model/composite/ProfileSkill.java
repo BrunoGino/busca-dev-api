@@ -2,10 +2,12 @@ package br.com.buscadevapi.model.composite;
 
 import br.com.buscadevapi.model.Profile;
 import br.com.buscadevapi.model.Skill;
+import lombok.Value;
 
 import javax.persistence.*;
 
 @Entity
+@Value
 public class ProfileSkill {
     @EmbeddedId
     private ProfileSkillKey id;
