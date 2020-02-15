@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CONTACT_ID")
     private long id;
     private String telephone;
     private String cellphone;

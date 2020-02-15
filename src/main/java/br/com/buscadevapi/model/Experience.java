@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EXPERIENCE_ID")
     private Long id;
     private String title;
     private String description;
@@ -22,7 +23,7 @@ public class Experience {
 
     /**
      * Does a calculation that gets the difference between the experience's end-date and initial-date
-     * 
+     *
      * @return Returns a long that represents the duration in days
      */
     public Long getDuration(){

@@ -3,10 +3,7 @@ package br.com.buscadevapi.model;
 import br.com.buscadevapi.model.composite.ProjectSkill;
 import lombok.Value;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +12,8 @@ import java.util.List;
 @Value
 public class Project {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROJECT_ID")
     private Long id;
     private String title;
     private LocalDate endingDate;

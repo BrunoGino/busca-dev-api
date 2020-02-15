@@ -12,6 +12,7 @@ import java.util.Objects;
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROFILE_ID")
     private Long id;
     private String description;
     @OneToMany(mappedBy = "skill")
