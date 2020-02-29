@@ -19,7 +19,7 @@ public class Experience {
     private LocalDate initialDate;
     private LocalDate endDate;
     @ManyToOne
-    private Profile profile;
+    private User user;
 
     /**
      * Does a calculation that gets the difference between the experience's end-date and initial-date

@@ -1,10 +1,36 @@
-INSERT INTO PROFILE(name,description) VALUES('Desenvolvedor','O Desenvolvedor de software (ou programador) é responsável pela programação, que é o processo de escrita, teste e manutenção de um programa de computador. Utiliza como subsídio o levantamento de requisitos e as análises feitas pelo analista de sistemas.');
-INSERT INTO PROFILE(name,description) VALUES('Product Owner','O product owner diz o que precisa ser feito, o que é prioritário e o que deve ficar de lado. Cabe a ele guiar um projeto desde o papel até transformá-lo em um produto prático, que pode ser vendido, negociado e trazer lucro para a empresa.');
-INSERT INTO CONTACT(CELLPHONE,EMAIL,GITHUB_LINK,LINKEDIN_LINK,TELEPHONE) VALUES('(12)1234-5472','teste2@gmail.com','https://github.com/Teste2','https://www.linkedin.com/in/teste2','(12)3456-7892')
-INSERT INTO CONTACT(CELLPHONE,EMAIL,GITHUB_LINK,LINKEDIN_LINK,TELEPHONE) VALUES('(12)1234-5473','teste3@gmail.com','https://github.com/Teste3','https://www.linkedin.com/in/teste3','(12)3456-7893')
-INSERT INTO SKILL(DESCRIPTION,NAME) VALUES('Java','Java é uma linguagem de programação orientada a objetos que atualmente faz parte do núcleo da Plataforma Java');
-INSERT INTO SKILL(DESCRIPTION,NAME) VALUES('Flutter','O Flutter, um framework desenvolvido pelo Google na linguagem Dart, permite o desenvolvimento de aplicações nativas tanto para Android quanto para iOS a partir da composição de Widgets');
-INSERT INTO USER(BIRTH_DATE,FIRST_NAME,GENDER,LAST_NAME,CONTACT_CONTACT_ID,PROFILE_PROFILE_ID)
-VALUES('1999-10-10','Gimpy','Male','Linux',1,1);
-INSERT INTO USER(BIRTH_DATE,FIRST_NAME,GENDER,LAST_NAME,CONTACT_CONTACT_ID,PROFILE_PROFILE_ID)
-VALUES('1999-01-10','Alexa','Female','Rebello',2,2);
+INSERT INTO PROFILE(name,description) VALUES('Product Owner','O product owner diz o que precisa ser feito, o que ï¿½ prioritï¿½rio e o que deve ficar de lado. Cabe a ele guiar um projeto desde o papel atï¿½ transformï¿½-lo em um produto prï¿½tico, que pode ser vendido, negociado e trazer lucro para a empresa.');
+INSERT INTO PROFILE(name,description) VALUES('Desenvolvedor','O Desenvolvedor de software (ou programador) ï¿½ responsï¿½vel pela programaï¿½ï¿½o, que ï¿½ o processo de escrita, teste e manutenï¿½ï¿½o de um programa de computador. Utiliza como subsï¿½dio o levantamento de requisitos e as anï¿½lises feitas pelo analista de sistemas.');
+
+INSERT INTO SKILL(DESCRIPTION,NAME) VALUES('Java','Java ï¿½ uma linguagem de programaï¿½ï¿½o orientada a objetos que atualmente faz parte do nï¿½cleo da Plataforma Java');
+INSERT INTO SKILL(DESCRIPTION,NAME) VALUES('Flutter','O Flutter, um framework desenvolvido pelo Google na linguagem Dart, permite o desenvolvimento de aplicaï¿½ï¿½es nativas tanto para Android quanto para iOS a partir da composiï¿½ï¿½o de Widgets');
+
+INSERT INTO USER(BIRTH_DATE,FIRST_NAME,GENDER,LAST_NAME,PROFILE_PROFILE_ID)
+VALUES('1999-10-10','Gimpy','Male','Linux',1);
+INSERT INTO USER(BIRTH_DATE,FIRST_NAME,GENDER,LAST_NAME,PROFILE_PROFILE_ID)
+VALUES('1999-01-10','Alexa','Female','Rebello',2);
+
+INSERT INTO CONTACT(CELLPHONE,EMAIL,GITHUB_LINK,LINKEDIN_LINK,TELEPHONE,USER_USER_ID) VALUES('(12)1234-5472','teste2@gmail.com','https://github.com/Teste2','https://www.linkedin.com/in/teste2','(12)3456-7892',1);
+INSERT INTO CONTACT(CELLPHONE,EMAIL,GITHUB_LINK,LINKEDIN_LINK,TELEPHONE,USER_USER_ID) VALUES('(12)1234-5473','teste3@gmail.com','https://github.com/Teste3','https://www.linkedin.com/in/teste3','(12)3456-7893',2);
+
+INSERT INTO USER_SKILL
+VALUES(1,1);
+INSERT INTO USER_SKILL
+VALUES(1,2);
+INSERT INTO USER_SKILL
+VALUES(2,2);
+
+INSERT INTO EXPERIENCE (DESCRIPTION,END_DATE,INITIAL_DATE,TITLE,USER_USER_ID)
+VALUES('Desenvolvendo REST APIs para serem consumidas por aplicaÃ§Ãµes mobile','2020-02-24','2016-02-01','Desenvolvedor Java Pleno na empresa FATEC',1);
+
+INSERT INTO EXPERIENCE (DESCRIPTION,END_DATE,INITIAL_DATE,TITLE,USER_USER_ID)
+VALUES('Desenvolvendo Frontends e coordenando designers Ã   elaborar interfaces para sistemas mobile na FATEC','2020-02-24','2016-02-01','Desenvolvedor Front-End SÃªnior na empresa FATEC',2);
+
+INSERT INTO PROJECT(DESCRIPTION,ENDING_DATE,INITIAL_DATE,STATUS,TITLE,USER_ID)
+VALUES('CriaÃ§Ã£o de um sistema de contabilidade para fazer balanÃ§o','2022-09-04','2020-02-25',2,'Contabil-Z',2);--2 == NEW
+INSERT INTO PROJECT(DESCRIPTION,ENDING_DATE,INITIAL_DATE,STATUS,TITLE,USER_ID)
+VALUES('CriaÃ§Ã£o de um sistema Android para apontamento de horas trabalhadas','2021-01-31','2020-02-25',2,'Hournator',2);
+
+INSERT INTO PROJECT_SKILL
+VALUES(2,2);
+INSERT INTO PROJECT_SKILL
+VALUES(2,1);

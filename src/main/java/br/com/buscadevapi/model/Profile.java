@@ -1,24 +1,32 @@
 package br.com.buscadevapi.model;
 
-import br.com.buscadevapi.model.composite.ProfileSkill;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-@Value
+@Data
+@NoArgsConstructor
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROFILE_ID")
     private Long id;
+    private String name;
     private String description;
-    @OneToMany(mappedBy = "skill")
-    private List<ProfileSkill> skills;
     @OneToMany(mappedBy = "profile")
-    private List<Experience> experiences;
-    @OneToOne(mappedBy = "profile")
-    private User user;
+    private List<Skill> skills;
+    @OneToMany(mappedBy = "profile")
+    private List<User> user;
+
+    public Profile(String description, List<Skill> skills, List<Experience> experiences, List<User> user) {
+        this.description = description;
+        this.skills = skills;
+        this.user = user;
+    }
+
+
 }

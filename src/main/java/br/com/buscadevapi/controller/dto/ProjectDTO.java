@@ -1,8 +1,6 @@
-package br.com.buscadevapi.controller.dao;
+package br.com.buscadevapi.controller.dto;
 
 import br.com.buscadevapi.model.Project;
-import br.com.buscadevapi.model.Skill;
-import br.com.buscadevapi.model.User;
 import lombok.Value;
 
 import java.time.Duration;
@@ -11,30 +9,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Value
-public class ProjectDAO {
+public class ProjectDTO {
     private String title;
     private LocalDate endingDate;
     private LocalDate initialDate;
     private String description;
-    private List<SkillDAO> skills;
+    private List<SkillDTO> skills;
     private String status;
-    private UserDAO owner;
+    private UserDTO owner;
 
-    public ProjectDAO(Project project) {
+    public ProjectDTO(Project project) {
         this.title = project.getTitle();
         this.endingDate = project.getEndingDate();
         this.initialDate = project.getInitialDate();
         this.description = project.getDescription();
-        this.skills = SkillDAO.convert(project.getSkills());
+        this.skills = SkillDTO.convert(project.getSkills());
         this.status = project.getStatus().name();
-        this.owner = UserDAO.convertOne(project.getOwner());
+        this.owner = UserDTO.convertOne(project.getOwner());
     }
 
     public Long getTotalDuration() {
         return Duration.between(endingDate, initialDate).toDays();
     }
 
-    public static List<ProjectDAO> convert(List<Project> projects) {
-        return projects.stream().map(ProjectDAO::new).collect(Collectors.toList());
+    public static List<ProjectDTO> convert(List<Project> projects) {
+        return projects.stream().map(ProjectDTO::new).collect(Collectors.toList());
     }
 }

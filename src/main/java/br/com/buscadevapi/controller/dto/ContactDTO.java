@@ -1,18 +1,17 @@
-package br.com.buscadevapi.controller.dao;
+package br.com.buscadevapi.controller.dto;
 
 import br.com.buscadevapi.model.Contact;
-import lombok.Builder;
 import lombok.Value;
 
 @Value
-public class ContactDAO {
+public class ContactDTO {
     private String telephone;
     private String cellphone;
     private String linkedinLink;
     private String email;
     private String githubLink;
 
-    public ContactDAO(Contact contact) {
+    public ContactDTO(Contact contact) {
         this.telephone = contact.getTelephone();
         this.cellphone = contact.getCellphone();
         this.linkedinLink = contact.getLinkedinLink();
@@ -20,8 +19,8 @@ public class ContactDAO {
         this.githubLink = contact.getGithubLink();
     }
 
-    public static ContactDAO convertOne(Contact contact) {
-        return new ContactDAO(contact);
+    public static ContactDTO convertOne(Contact contact) {
+        return new ContactDTO(contact);
     }
 
 }

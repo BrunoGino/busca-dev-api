@@ -1,4 +1,4 @@
-package br.com.buscadevapi.controller.dao;
+package br.com.buscadevapi.controller.dto;
 
 import br.com.buscadevapi.model.Experience;
 import lombok.Value;
@@ -8,21 +8,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Value
-public class ExperienceDAO {
+public class ExperienceDTO {
     private String title;
     private String description;
     private LocalDate initialDate;
     private LocalDate endDate;
 
-    public ExperienceDAO(Experience experience) {
+    public ExperienceDTO(Experience experience) {
         this.title = experience.getTitle();
         this.description = experience.getDescription();
         this.initialDate = experience.getInitialDate();
         this.endDate = experience.getEndDate();
     }
 
-    public static List<ExperienceDAO> convert(List<Experience> experience) {
-        return experience.stream().map(ExperienceDAO::new).collect(Collectors.toList());
+    public static List<ExperienceDTO> convert(List<Experience> experience) {
+        return experience.stream().map(ExperienceDTO::new).collect(Collectors.toList());
     }
 
 }

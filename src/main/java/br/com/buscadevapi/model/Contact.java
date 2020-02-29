@@ -1,12 +1,15 @@
 package br.com.buscadevapi.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Value
+@Data
+@NoArgsConstructor
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +20,17 @@ public class Contact {
     private String linkedinLink;
     private String email;
     private String githubLink;
-    @OneToOne(mappedBy = "contact")
+    @OneToOne
+    @JoinColumn(referencedColumnName = "USER_ID")
     private User user;
+
+    public Contact(String telephone, String cellphone, String linkedinLink, String email, String githubLink, User user) {
+        this.telephone = telephone;
+        this.cellphone = cellphone;
+        this.linkedinLink = linkedinLink;
+        this.email = email;
+        this.githubLink = githubLink;
+        this.user = user;
+    }
+
 }

@@ -21,5 +21,4 @@ public class UserProjectLike {
     @MapsId("PROJECT_ID")
     @JoinColumn(name = "PROJECT_ID")
     private Project project;
-
 }

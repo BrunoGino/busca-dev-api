@@ -1,4 +1,4 @@
-package br.com.buscadevapi.controller.dao;
+package br.com.buscadevapi.controller.dto;
 
 import br.com.buscadevapi.model.Profile;
 import lombok.Value;
@@ -6,19 +6,19 @@ import lombok.Value;
 import java.util.List;
 
 @Value
-public class ProfileDAO {
+public class ProfileDTO {
     private String description;
-    private List<SkillDAO> skills;
-    private List<ExperienceDAO> experiences;
+    private List<SkillDTO> skills;
+//    private List<ExperienceDTO> experiences;
 
-    public ProfileDAO(Profile profile) {
+    public ProfileDTO(Profile profile) {
         this.description = profile.getDescription();
-        this.skills = SkillDAO.convert(profile.getSkills());
-        this.experiences = ExperienceDAO.convert(profile.getExperiences());
+        this.skills = SkillDTO.convert(profile.getSkills());
+//        this.experiences = ExperienceDTO.convert(profile.getExperiences());
     }
 
-    public static ProfileDAO convertOne(Profile profile) {
-        return new ProfileDAO(profile);
+    public static ProfileDTO convertOne(Profile profile) {
+        return new ProfileDTO(profile);
     }
 
 }

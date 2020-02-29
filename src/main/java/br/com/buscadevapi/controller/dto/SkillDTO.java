@@ -1,4 +1,4 @@
-package br.com.buscadevapi.controller.dao;
+package br.com.buscadevapi.controller.dto;
 
 import br.com.buscadevapi.model.Skill;
 import lombok.Value;
@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Value
-public class SkillDAO {
+public class SkillDTO {
     private String name;
     private String description;
 
-    public SkillDAO(Skill skill) {
+    public SkillDTO(Skill skill) {
         this.description = skill.getDescription();
         this.name = skill.getName();
     }
 
-    public static List<SkillDAO> convert(List<Skill> skills) {
-        return skills.stream().map(SkillDAO::new).collect(Collectors.toList());
+    public static List<SkillDTO> convert(List<Skill> skills) {
+        return skills.stream().map(SkillDTO::new).collect(Collectors.toList());
     }
 }
