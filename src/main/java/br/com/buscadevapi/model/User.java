@@ -18,16 +18,19 @@ public class User {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
-    private String gender;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "PROFILE_ID")
     private Profile profile;
-    @OneToOne(mappedBy = "user")
-    private Contact contact;
+    @OneToMany(mappedBy = "user")
+    private List<Link> link;
     @OneToMany(mappedBy = "owner")
     private List<Project> projectList;
     @OneToMany
     private List<Experience> experiences;
+    private String email;
+    private String cellphone;
+    private String telephone;
+
     @ManyToMany
     @JoinTable(
             name = "USER_SKILL",
@@ -35,11 +38,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "SKILL_ID"))
     private List<Skill> skills;
 
-    public User(String firstName, String lastName, LocalDate birthDate, String gender, List<Project> projects) {
+    public User(String firstName, String lastName, LocalDate birthDate, List<Project> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-        this.gender = gender;
         this.projectList = projects;
     }
 

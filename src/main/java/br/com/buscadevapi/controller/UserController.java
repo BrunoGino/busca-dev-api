@@ -1,11 +1,9 @@
 package br.com.buscadevapi.controller;
 
 import br.com.buscadevapi.controller.dto.UserDTO;
-import br.com.buscadevapi.controller.form.ContactForm;
+import br.com.buscadevapi.controller.form.LinkForm;
 import br.com.buscadevapi.controller.form.UserForm;
 import br.com.buscadevapi.controller.form.UserProfileForm;
-import br.com.buscadevapi.model.Contact;
-import br.com.buscadevapi.model.Profile;
 import br.com.buscadevapi.model.User;
 import br.com.buscadevapi.repository.ProfileRepository;
 import br.com.buscadevapi.repository.SkillRepository;
@@ -21,7 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/user")
@@ -49,7 +46,7 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UserDTO> newUser(@RequestBody @Valid UserForm userForm, @RequestBody @Valid ContactForm contactForm,
+    public ResponseEntity<UserDTO> newUser(@RequestBody @Valid UserForm userForm, @RequestBody @Valid LinkForm linkForm,
                                            @RequestBody @Valid UserProfileForm userProfileForm,
                                            UriComponentsBuilder uriComponentsBuilder) {
 //        User user = userForm.convert();

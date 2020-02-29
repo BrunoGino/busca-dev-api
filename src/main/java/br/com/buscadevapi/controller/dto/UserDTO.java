@@ -12,13 +12,11 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
-    private String gender;
 
     public UserDTO(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.birthDate = user.getBirthDate();
-        this.gender = user.getGender();
     }
 
     public static UserDTO convertOne(User user) {

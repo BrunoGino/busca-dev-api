@@ -38,7 +38,7 @@ public class UserForm {
 
     public User convert() {
         List<Project> projects = new ArrayList<>();
-        return new User(firstName, lastName, birthDate, gender, projects);
+        return new User(firstName, lastName, birthDate, projects);
     }
 
 }

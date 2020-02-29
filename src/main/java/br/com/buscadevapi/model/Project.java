@@ -25,7 +25,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "PROJECT_ID"),
             inverseJoinColumns = @JoinColumn(name = "SKILL_ID"))
     private List<Skill> skills;
-    private Status status;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User owner;
@@ -37,7 +37,7 @@ public class Project {
         this.initialDate = initialDate;
         this.description = description;
         this.skills = skills;
-        this.status = status;
+        this.status = status.getDescription();
         this.owner = owner;
     }
 

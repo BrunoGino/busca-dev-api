@@ -24,7 +24,7 @@ public class ProjectDTO {
         this.initialDate = project.getInitialDate();
         this.description = project.getDescription();
         this.skills = SkillDTO.convert(project.getSkills());
-        this.status = project.getStatus().name();
+        this.status = project.getStatus();
         this.owner = UserDTO.convertOne(project.getOwner());
     }
 
