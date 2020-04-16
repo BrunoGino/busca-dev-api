@@ -2,7 +2,6 @@ package br.com.buscadevapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,7 +21,7 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private List<User> user;
 
-    public Profile(String description, List<Skill> skills, List<Experience> experiences, List<User> user) {
+    public Profile(String description, List<Skill> skills, List<User> user) {
         this.description = description;
         this.skills = skills;
         this.user = user;

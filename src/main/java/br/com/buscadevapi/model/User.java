@@ -2,6 +2,7 @@ package br.com.buscadevapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +11,8 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(uniqueConstraints =
+        @UniqueConstraint(columnNames = {"EMAIL"}))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

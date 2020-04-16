@@ -1,5 +1,6 @@
 package br.com.buscadevapi.model;
 
+import lombok.Data;
 import lombok.Value;
 
 import javax.persistence.*;
@@ -7,8 +8,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 @Entity
-@Value
-
+@Data
 public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class Experience {
      *
      * @return Returns a long that represents the duration in days
      */
-    public Long getDuration(){
-        return Duration.between(endDate.atStartOfDay(),initialDate.atStartOfDay()).toDays();
-    }
+//    public Long getDuration(){
+//        return Duration.between(endDate.atStartOfDay(),initialDate.atStartOfDay()).toDays();
+//    }
 }
