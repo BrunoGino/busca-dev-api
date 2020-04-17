@@ -2,10 +2,8 @@ package br.com.buscadevapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -20,9 +18,4 @@ public class Link {
     @ManyToOne
     @JoinColumn(referencedColumnName = "USER_ID")
     private User user;
-
-    public Link(String link, User user) {
-        this.user = user;
-    }
-
 }
