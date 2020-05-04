@@ -1,14 +1,14 @@
 package br.com.buscadevapi.model;
 
 import lombok.Data;
-import lombok.Value;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,7 @@ public class Experience {
     private LocalDate initialDate;
     private LocalDate endDate;
     @ManyToOne
+    @JoinColumn(referencedColumnName = "USER_ID")
     private User user;
 
-    /**
-     * Does a calculation that gets the difference between the experience's end-date and initial-date
-     *
-     * @return Returns a long that represents the duration in days
-     */
-//    public Long getDuration(){
-//        return Duration.between(endDate.atStartOfDay(),initialDate.atStartOfDay()).toDays();
-//    }
 }

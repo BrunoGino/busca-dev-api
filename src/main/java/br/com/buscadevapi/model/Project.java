@@ -1,14 +1,10 @@
 package br.com.buscadevapi.model;
 
-import br.com.buscadevapi.model.converter.LocalDateStringConverter;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 @Entity
