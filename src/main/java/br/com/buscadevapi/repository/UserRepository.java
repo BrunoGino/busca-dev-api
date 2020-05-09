@@ -4,11 +4,11 @@ import br.com.buscadevapi.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.swing.text.html.Option;
+import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Page<User> findAll(Pageable pageable);
-    Page<User> findByFirstName(String firstName, Pageable pageable);
-    User findByEmail(String email);
+
+	@Query(value="SELECT * FROM USER U "
+			+ "INNER JOIN PROFILE P ON (P.name = :type)")
+	Page<User> findByProfileType(Pageable pageable, String type);
 }
