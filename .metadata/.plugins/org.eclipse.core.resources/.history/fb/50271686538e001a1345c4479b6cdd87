@@ -1,0 +1,32 @@
+package br.com.userprofiles.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.userprofiles.form.ExperienceForm;
+import br.com.userprofiles.model.Experience;
+import br.com.userprofiles.repository.ExperienceRepository;
+import br.com.userprofiles.repository.UserRepository;
+
+@Service
+public class ExperienceService {
+
+	@Autowired
+	private ExperienceRepository experienceRepository;
+	@Autowired
+	private UserRepository userRepository;
+	
+	
+	public Experience createExperience(ExperienceForm form) {
+		Experience experience = new Experience();
+		
+		experience.setTitle(form.getTitle());
+		experience.setDescription(form.getDescription());
+		experience.setInitialDate(form.getInitialDate());
+		experience.setEndDate(form.getEndDate());
+		
+		
+		experience.setUser(userRepository.findById(form.getUserId()).get());
+		
+	}
+}

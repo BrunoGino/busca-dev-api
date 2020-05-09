@@ -1,0 +1,19 @@
+package br.com.userprofiles.service;
+
+import java.time.LocalDate;
+
+public class UserForm {
+
+	public String getFirstName() {
+		return null;
+	}
+
+	public String getEmail() {
+		return null;
+	}
+
+	public LocalDate getBirthDate() {
+		return null;
+	}
+
+}

@@ -1,0 +1,22 @@
+package br.com.userprofiles.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.userprofiles.form.LinkForm;
+import br.com.userprofiles.model.Link;
+import br.com.userprofiles.repository.LinkRepository;
+
+@Service
+public class LinkService {
+	@Autowired
+	private LinkRepository linkRepository;
+	
+	public Link createLink(LinkForm form) {
+		Link newLink = new Link();
+		
+		
+		newLink.setLinkType();
+	}
+
+}

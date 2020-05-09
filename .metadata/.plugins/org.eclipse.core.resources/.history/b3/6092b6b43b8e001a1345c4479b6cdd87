@@ -1,0 +1,30 @@
+package br.com.userprofiles.model;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import lombok.Data;
+
+@Entity
+@Data
+public class Skill {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "SKILL_ID")
+	private Long id;
+	private String name;
+	private String description;
+	@ManyToOne
+	@JoinColumn(name = "PROFILE_ID")
+	private Profile profile;
+	@ManyToMany(mappedBy = "skills")
+	private List<User> users;
+}

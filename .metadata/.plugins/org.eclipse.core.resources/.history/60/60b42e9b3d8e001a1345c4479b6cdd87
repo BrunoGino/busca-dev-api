@@ -1,0 +1,44 @@
+package br.com.userprofiles.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.userprofiles.model.Experience;
+import br.com.userprofiles.model.Profile;
+import br.com.userprofiles.model.User;
+import br.com.userprofiles.repository.ExperienceRepository;
+import br.com.userprofiles.repository.LinkRepository;
+import br.com.userprofiles.repository.ProfileRepository;
+import br.com.userprofiles.repository.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private ProfileRepository profileRepository;
+	@Autowired
+	private LinkRepository linkRepository;
+	@Autowired
+	private ExperienceRepository experienceRepository;
+	
+	public UserDTO createUser(UserForm form) {
+		User user = new User();
+		user.setFirstName(form.getFirstName());
+		user.setEmail(form.getEmail());
+		user.setBirthDate(form.getBirthDate());
+		user.setCellphone(form.getCellphone());
+		user.setTelephone(form.getTelephone());
+		
+		
+		Profile profile = profileRepository.findByName(form.getName());
+		user.setProfile(profile);
+		
+		List<Experience> experiences = experienceRepository.find
+		user.setExperiences(experiences);
+	}
+	
+	
+}

@@ -1,0 +1,16 @@
+package br.com.userprofiles.service;
+
+import org.springframework.stereotype.Service;
+
+import br.com.userprofiles.repository.ExperienceRepository;
+import br.com.userprofiles.repository.LinkRepository;
+import br.com.userprofiles.repository.ProfileRepository;
+import br.com.userprofiles.repository.UserRepository;
+
+@Service
+public class UserService {
+	private UserRepository userRepository;
+	private ProfileRepository profileRepository;
+	private LinkRepository linkRepository;
+	private ExperienceRepository experienceRepository;
+}

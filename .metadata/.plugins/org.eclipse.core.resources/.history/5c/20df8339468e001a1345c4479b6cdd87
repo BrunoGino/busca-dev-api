@@ -1,0 +1,7 @@
+package br.com.userprofiles.form;
+
+public class Snippet {
+	@Enumerated(EnumType.STRING)
+		private LinkType link;
+}
+
