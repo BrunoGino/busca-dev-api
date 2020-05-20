@@ -2,11 +2,10 @@ package br.com.buscadevapi.controller.dto;
 
 import java.time.LocalDate;
 
+import br.com.buscadevapi.model.User;
 import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import br.com.userprofiles.model.User;
 import lombok.Value;
 
 @Value
