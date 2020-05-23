@@ -23,6 +23,4 @@ public class Skill {
     @ManyToOne
     @JoinColumn(name = "PROFILE_ID")
     private Profile profile;
-    @ManyToMany(mappedBy = "skills")
-    private List<User> users;
 }

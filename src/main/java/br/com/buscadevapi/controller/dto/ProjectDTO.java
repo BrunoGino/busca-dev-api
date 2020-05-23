@@ -26,12 +26,12 @@ public class ProjectDTO {
         this.endingDate = project.getEndingDate();
         this.initialDate = project.getInitialDate();
         this.description = project.getDescription();
-        this.skills = SkillDTO.convert(new PageImpl<>(project.getSkills()));
+        this.skills = SkillDTO.convertPage(new PageImpl<>(project.getSkills()));
         this.status = project.getStatus();
-        this.owner = UserDTO.convertOne(project.getOwner());
+        this.owner = UserDTO.convert(project.getOwner());
     }
 
-    public static Page<ProjectDTO> convert(Page<Project> projects) {
+    public static Page<ProjectDTO> convertPage(Page<Project> projects) {
         return projects.map(ProjectDTO::new);
     }
 }

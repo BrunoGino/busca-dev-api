@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProfileService {
 	@Autowired
@@ -26,5 +28,9 @@ public class ProfileService {
 		profileRepository.save(profile);
 		
 		return profile;
+	}
+
+	public Optional<Profile> getProfileByName(String profileName) {
+		return profileRepository.findByName(profileName.toUpperCase());
 	}
 }

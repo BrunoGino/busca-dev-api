@@ -4,9 +4,6 @@ import br.com.buscadevapi.model.Skill;
 import lombok.Value;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Value
 public class SkillDTO {
     private String name;
@@ -17,7 +14,7 @@ public class SkillDTO {
         this.name = skill.getName();
     }
 
-    public static Page<SkillDTO> convert(Page<Skill> skills) {
+    public static Page<SkillDTO> convertPage(Page<Skill> skills) {
         return skills.map(SkillDTO::new);
     }
 }

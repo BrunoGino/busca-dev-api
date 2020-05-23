@@ -6,26 +6,32 @@ import br.com.buscadevapi.model.LinkType;
 import br.com.buscadevapi.repository.LinkRepository;
 import br.com.buscadevapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LinkService {
-	@Autowired
-	private LinkRepository linkRepository;
-	@Autowired
-	private UserRepository userRepository;
-	
+    @Autowired
+    private LinkRepository linkRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	public Link createLink(LinkForm form) {
-		Link newLink = new Link();
 
-		newLink.setLinkType(LinkType.valueOf(form.getLinkType().toUpperCase()));
-		newLink.setLink(form.getLink());
-		newLink.setUser(userRepository.findById(form.getUserId()).get());
+    public Page<Link> getLinksByUser(Pageable pageable, Long userId) {
+        return linkRepository.findPagedLinksByUser(pageable, userId);
+    }
 
-		linkRepository.save(newLink);
+    public Link createLink(LinkForm form) {
+        Link newLink = new Link();
 
-		return newLink;
-	}
+        newLink.setLinkType(LinkType.valueOf(form.getLinkType().toUpperCase()));
+        newLink.setLink(form.getLink());
+        newLink.setUser(userRepository.findById(form.getUserId()).get());
+
+        linkRepository.save(newLink);
+
+        return newLink;
+    }
 
 }
