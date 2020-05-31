@@ -1,8 +1,0 @@
-package br.com.userprofiles.model;
-
-import javax.persistence.Entity;
-
-@Entity
-public class Profile {
-
-}

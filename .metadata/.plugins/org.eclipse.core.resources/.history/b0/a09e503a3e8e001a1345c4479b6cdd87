@@ -1,9 +1,0 @@
-package br.com.userprofiles.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import br.com.userprofiles.model.Link;
-
-public interface LinkRepository extends JpaRepository<Link, Long>{
-	
-}

@@ -56,4 +56,6 @@
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
 <fullyQualifiedTypeName name="org.springframework.data.web.PageableDefault"/>
 <fullyQualifiedTypeName name="org.springframework.data.domain.Pageable"/>
+<fullyQualifiedTypeName name="br.com.webclient.controller.dto.RestResponsePage"/>
+<fullyQualifiedTypeName name="br.com.webclient.controller.dto.AppAcessoDTO"/>
 </qualifiedTypeNameHistroy>

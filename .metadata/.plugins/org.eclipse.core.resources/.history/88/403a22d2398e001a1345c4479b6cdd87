@@ -1,5 +1,0 @@
-package br.com.userprofiles.repository;
-
-public interface SkillRepository {
-
-}

@@ -7,13 +7,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "B_USER", uniqueConstraints = @UniqueConstraint(columnNames = { "EMAIL" }))
+@Table(name = "B_USER", uniqueConstraints = @UniqueConstraint(columnNames = {"EMAIL"}))
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
     private Long id;
+    @Column(name = "FIRST_NAME")
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
