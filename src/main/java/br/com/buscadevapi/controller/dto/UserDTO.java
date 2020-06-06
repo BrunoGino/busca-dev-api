@@ -6,6 +6,7 @@ import lombok.Value;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Value
 public class UserDTO {
@@ -18,6 +19,8 @@ public class UserDTO {
     private String email;
     private String cellphone;
     private String telephone;
+    private List<SkillDTO> skills;
+    private List<ExperienceDTO> experiences;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -28,6 +31,8 @@ public class UserDTO {
         this.email = user.getEmail();
         this.cellphone = user.getCellphone();
         this.telephone = user.getTelephone();
+        this.skills = SkillDTO.convertList(user.getSkills());
+        this.experiences = ExperienceDTO.convertList(user.getExperiences());
     }
 
     public static Page<UserDTO> convertPage(Page<User> users) {

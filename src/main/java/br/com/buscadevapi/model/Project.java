@@ -18,6 +18,7 @@ public class Project {
     private String title;
     private LocalDate endingDate;
     private LocalDate initialDate;
+    @Column(columnDefinition = "CLOB")
     private String description;
     @ManyToMany
     @JoinTable(

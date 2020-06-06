@@ -1,13 +1,11 @@
 package br.com.buscadevapi.service;
 
+import br.com.buscadevapi.controller.dto.SkillDTO;
 import br.com.buscadevapi.controller.form.UserForm;
 import br.com.buscadevapi.model.Experience;
 import br.com.buscadevapi.model.Link;
 import br.com.buscadevapi.model.Profile;
 import br.com.buscadevapi.model.User;
-import br.com.buscadevapi.repository.ExperienceRepository;
-import br.com.buscadevapi.repository.LinkRepository;
-import br.com.buscadevapi.repository.ProfileRepository;
 import br.com.buscadevapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,17 +13,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileService profileService;
     @Autowired
-    private LinkRepository linkRepository;
+    private LinkService linkService;
     @Autowired
-    private ExperienceRepository experienceRepository;
+    private ExperienceService experienceService;
+    @Autowired
+    private SkillService skillService;
 
     public Page<User> getByProfile(Pageable pageable, String profileType) {
         return userRepository.findByProfileType(pageable, profileType.toUpperCase());
@@ -43,21 +44,39 @@ public class UserService {
         user.setCellphone(form.getCellphone());
         user.setTelephone(form.getTelephone());
 
-
-        Profile profile = profileRepository.findByName(form.getProfileName()).get();
+        Profile profile = profileService.getProfileByName(form.getProfileName()).get();
         user.setProfile(profile);
 
-        Page<Experience> experiences = experienceRepository.findAllByUserId(pageable, user.getId());
-        user.setExperiences(experiences.getContent());
+        List<Experience> createdExperiences = createUserExperiences(form, pageable, user.getId());
+        user.setExperiences(createdExperiences);
 
-        List<Link> links = linkRepository.findPagedLinksByUser(pageable, user.getId()).getContent();
-        user.setLink(links);
+        List<Long> skillIds = form.getSkills().stream().map(SkillDTO::getId).collect(Collectors.toList());
+        user.setSkills(skillService.getSkillsById(skillIds));
+
+
+        List<Link> createdLinks = createUserLinks(form, pageable, user.getId());
+        user.setLinks(createdLinks);
 
         userRepository.save(user);
 
         return user;
     }
 
+    private List<Link> createUserLinks(UserForm form, Pageable pageable, Long userId) {
+        form.getLinks().forEach(linkForm -> {
+            linkForm.setUserId(userId);
+            linkService.createLink(linkForm);
+        });
+        return linkService.getLinksByUser(pageable, userId).getContent();
+    }
+
+    private List<Experience> createUserExperiences(UserForm form, Pageable pageable, Long userId) {
+        form.getExperiences().forEach(experienceForm -> {
+            experienceForm.setUserId(userId);
+            experienceService.createExperience(experienceForm);
+        });
+        return experienceService.getExperiencesByUser(pageable, userId).getContent();
+    }
 
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);

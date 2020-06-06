@@ -6,6 +6,8 @@ import lombok.Value;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Value
 public class ExperienceDTO {
@@ -31,4 +33,7 @@ public class ExperienceDTO {
         return experiences.map(ExperienceDTO::new);
     }
 
+    public static List<ExperienceDTO> convertList(List<Experience> experiences) {
+        return experiences.stream().map(ExperienceDTO::new).collect(Collectors.toList());
+    }
 }

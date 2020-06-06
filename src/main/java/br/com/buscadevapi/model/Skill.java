@@ -2,7 +2,6 @@ package br.com.buscadevapi.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +15,7 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SKILL_ID")
     private Long id;
+    @Column(unique = true)
     private String name;
     private String description;
     @ManyToMany(mappedBy = "skills")
