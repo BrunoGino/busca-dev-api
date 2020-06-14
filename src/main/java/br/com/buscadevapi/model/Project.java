@@ -13,12 +13,14 @@ import java.util.List;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PROJECT_ID")
+    @Column(name = "PROJECT_ID", nullable = false)
     private Long id;
+    @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String title;
+    @Column(nullable = false)
     private LocalDate endingDate;
     private LocalDate initialDate;
-    @Column(columnDefinition = "CLOB")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
     @ManyToMany
     @JoinTable(
@@ -26,6 +28,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "PROJECT_ID"),
             inverseJoinColumns = @JoinColumn(name = "SKILL_ID"))
     private List<Skill> skills;
+    @Column(columnDefinition = "VARCHAR(40)")
     private String status;
     @ManyToOne
     @JoinColumn(name = "USER_ID")

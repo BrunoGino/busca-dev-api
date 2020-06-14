@@ -13,4 +13,10 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
             "WHERE USER_USER_ID = :userId", nativeQuery = true)
     Page<Link> findPagedLinksByUser(Pageable pageable, @Param("userId") Long userId);
 
+    @Query(value = "SELECT EXISTS( " +
+            "SELECT 1 FROM LINK WHERE LINK = :link " +
+            "AND LINK_TYPE = :linkType " +
+            "AND USER_USER_ID = :userId " +
+            "LIMIT 1)", nativeQuery = true)
+    boolean findIfLinkExists(@Param("link") String link, @Param("linkType") String linkType, @Param("userId") Long userId);
 }

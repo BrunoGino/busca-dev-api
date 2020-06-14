@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Value;
 import org.springframework.data.domain.Page;
 
+import java.util.Optional;
+
 @Value
 public class ProfileDTO {
     @JsonIgnore
@@ -22,4 +24,7 @@ public class ProfileDTO {
         return profiles.map(ProfileDTO::new);
     }
 
+    public static ProfileDTO convert(Profile profileByName) {
+        return new ProfileDTO(profileByName);
+    }
 }

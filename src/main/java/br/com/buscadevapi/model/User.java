@@ -12,11 +12,13 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", nullable = false)
     private Long id;
-    @Column(name = "FIRST_NAME")
+    @Column(name = "FIRST_NAME", columnDefinition = "VARCHAR(50)", nullable = false)
     private String firstName;
+    @Column(name = "LAST_NAME", columnDefinition = "VARCHAR(50)", nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private LocalDate birthDate;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "PROFILE_ID")
@@ -32,7 +34,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "SKILL_ID")
     )
     private List<Skill> skills;
+    @Column(columnDefinition = "VARCHAR(60)")
     private String email;
+    @Column(columnDefinition = "VARCHAR(30)")
     private String cellphone;
+    @Column(columnDefinition = "VARCHAR(30)")
     private String telephone;
 }

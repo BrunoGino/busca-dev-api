@@ -1,17 +1,10 @@
 package br.com.buscadevapi.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -19,10 +12,13 @@ import lombok.NoArgsConstructor;
 public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EXPERIENCE_ID")
+    @Column(name = "EXPERIENCE_ID", nullable = false)
     private Long id;
+    @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String title;
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
+    @Column(nullable = false)
     private LocalDate initialDate;
     private LocalDate endDate;
     @ManyToOne

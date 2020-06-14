@@ -1,18 +1,13 @@
 spring:
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:busca-dev
-    username: sa
-    password:
+    initialization-mode: always
+    url: jdbc:postgresql://ec2-34-194-198-176.compute-1.amazonaws.com:5432/db0q6f683mn7q6
+    username: zszybajbjygmsq
+    password: 9809fdd41521f5acd508e99f8020a1d5781518782fecddd8b1f671b1b7bfd72a
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: update
     properties:
       hibernate.show_sql: true
       hibernate.format_sql: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console

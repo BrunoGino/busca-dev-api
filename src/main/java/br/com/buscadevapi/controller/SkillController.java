@@ -34,6 +34,8 @@ public class SkillController {
         return SkillDTO.convertPage(skillService.getSkills(pageable));
     }
 
+
+
     private Page<SkillDTO> getSkillsByProfileName(String profileName, Pageable pageable) {
         Optional<Profile> foundProfile = profileService.getProfileByName(profileName.toUpperCase());
         return foundProfile.map(profile -> SkillDTO.convertPage(skillService.getSkillsByProfile(pageable, profile)))
