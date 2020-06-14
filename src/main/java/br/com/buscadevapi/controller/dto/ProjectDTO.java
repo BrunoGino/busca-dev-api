@@ -1,14 +1,16 @@
 package br.com.buscadevapi.controller.dto;
 
 import br.com.buscadevapi.model.Project;
+import br.com.buscadevapi.model.Skill;
 import br.com.buscadevapi.model.converter.LocalDateStringConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Value
 public class ProjectDTO {
@@ -20,7 +22,7 @@ public class ProjectDTO {
     @JsonSerialize(converter = LocalDateStringConverter.class)
     private LocalDate initialDate;
     private String description;
-    private Page<SkillDTO> skills;
+    private List<String> skills;
     private String status;
     private Long ownerId;
 
@@ -30,7 +32,7 @@ public class ProjectDTO {
         this.endingDate = project.getEndingDate();
         this.initialDate = project.getInitialDate();
         this.description = project.getDescription();
-        this.skills = SkillDTO.convertPage(new PageImpl<>(project.getSkills()));
+        this.skills = project.getSkills().stream().map(Skill::getName).collect(Collectors.toList());
         this.status = project.getStatus();
         this.ownerId = project.getOwner().getId();
     }
