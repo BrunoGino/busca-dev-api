@@ -27,14 +27,19 @@ public class LinkService {
 
     public Link createLink(LinkForm form) {
         if (!linkExists(form)) {
-            return saveLink(form);
+            return saveNewLink(form);
         }
         throw new DataIntegrityViolationException("Object already exists in database: " + form.toString());
     }
 
-    public Link updateLink(LinkForm linkForm) {
-        if (linkExists(linkForm)) {
-            return saveLink(linkForm);
+    public Link updateLink(Long linkId, LinkForm linkForm) {
+        Optional<Link> optionalLink = linkRepository.findById(linkId);
+        if (optionalLink.isPresent()) {
+            Link link = optionalLink.get();
+            link.setLink(linkForm.getLink());
+            link.setLinkType(LinkType.valueOf(linkForm.getLinkType()));
+
+            return linkRepository.save(link);
         }
         throw new DataIntegrityViolationException("Object doesn't exists in database: " + linkForm.toString());
     }
@@ -53,7 +58,7 @@ public class LinkService {
         return linkRepository.findIfLinkExists(form.getLink(), form.getLinkType(), form.getUserId());
     }
 
-    private Link saveLink(LinkForm form) {
+    private Link saveNewLink(LinkForm form) {
         Link newLink = new Link();
         newLink.setLinkType(LinkType.valueOf(form.getLinkType().toUpperCase()));
         newLink.setLink(form.getLink().trim());

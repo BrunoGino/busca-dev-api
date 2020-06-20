@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,9 +50,10 @@ public class SkillService {
         throw new DataIntegrityViolationException("Object already exists in database: " + skillForm.toString());
     }
 
-    public Skill updateSkill(SkillForm skillForm) {
-        if (alreadyExists(skillForm)) {
-            Skill skill = skillRepository.findByName(skillForm.getName());
+    public Skill updateSkill(Long skillId, SkillForm skillForm) {
+        Optional<Skill> optionalSkill = skillRepository.findById(skillId);
+        if (optionalSkill.isPresent()) {
+            Skill skill = optionalSkill.get();
 
             skill.setName(skillForm.getName());
             skill.setDescription(skillForm.getDescription());
@@ -98,16 +98,17 @@ public class SkillService {
         }
     }
 
-    private boolean alreadyExists(SkillForm skillForm) {
-        return skillRepository.findIfExists(skillForm.getName());
-    }
 
     public Optional<Skill> getSkillById(Long skillId) {
         return skillRepository.findById(skillId);
     }
 
-    public List<Skill> getSkillsBySkillNames(List<String> skillNames){
+    public List<Skill> getSkillsBySkillNames(List<String> skillNames) {
         return skillRepository.findByAllSkillNames(skillNames);
+    }
+
+    private boolean alreadyExists(SkillForm skillForm) {
+        return skillRepository.findIfExists(skillForm.getName());
     }
 
 }

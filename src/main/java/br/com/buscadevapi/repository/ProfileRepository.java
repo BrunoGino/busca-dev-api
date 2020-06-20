@@ -15,4 +15,10 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
             "SELECT 1 FROM PROFILE WHERE NAME = :name " +
             "LIMIT 1)", nativeQuery = true)
     boolean findIfExists(@Param("name") String name);
+
+    @Query(value = "SELECT EXISTS( " +
+            "SELECT 1 FROM PROFILE WHERE PROFILE_ID = :profileId " +
+            "LIMIT 1)", nativeQuery = true)
+    boolean findIfExistsById(@Param("profileId") Long profileId);
+
 }

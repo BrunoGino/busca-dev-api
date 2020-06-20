@@ -20,7 +20,7 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
     List<Skill> findSkillsBySkillId(@Param("skillIds") List<Long> skillIds);
 
     @Query(value = "SELECT EXISTS( " +
-            "SELECT 1 FROM SKILL NAME = :name " +
+            "SELECT 1 FROM SKILL WHERE NAME = :name " +
             "LIMIT 1)", nativeQuery = true)
     boolean findIfExists(@Param("name") String name);
 
@@ -32,4 +32,9 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
             "WHERE NAME IN(:skillNames) " +
             "ORDER BY NAME ASC", nativeQuery = true)
     List<Skill> findByAllSkillNames(List<String> skillNames);
+
+    @Query(value = "SELECT EXISTS( " +
+            "SELECT 1 FROM SKILL WHERE SKILL_ID = :skillId " +
+            "LIMIT 1)", nativeQuery = true)
+    boolean findIfExistsById(@Param("skillId") Long skillId);
 }

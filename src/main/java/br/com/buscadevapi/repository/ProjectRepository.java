@@ -18,4 +18,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "SELECT 1 FROM PROJECT WHERE TITLE :projectTitle " +
             "LIMIT 1)", nativeQuery = true)
     boolean findIfExists(@Param("projectTitle") String projectTitle);
+
+    @Query(value = "SELECT EXISTS( " +
+            "SELECT 1 FROM PROJECT WHERE PROJECT_ID = :projectId " +
+            "LIMIT 1", nativeQuery = true)
+    boolean findIfExistsById(Long projectId);
+
 }

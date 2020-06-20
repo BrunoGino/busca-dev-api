@@ -52,9 +52,9 @@ public class SkillController {
         return ResponseEntity.created(uri).body(skillDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateSkill(@RequestBody @Valid SkillForm skillForm) {
-        Skill updatedSkill = skillService.updateSkill(skillForm);
+    @PutMapping(value = "/{skillId}")
+    public ResponseEntity<?> updateSkill(@RequestBody @Valid SkillForm skillForm, @PathVariable Long skillId) {
+        Skill updatedSkill = skillService.updateSkill(skillId, skillForm);
         if (updatedSkill == null) {
             return ResponseEntity.notFound().build();
         }

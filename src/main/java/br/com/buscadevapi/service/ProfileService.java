@@ -22,27 +22,28 @@ public class ProfileService {
 
     public Profile createProfile(ProfileForm form) {
         if (!profileExists(form)) {
-            return saveProfile(form);
+            return saveNewProfile(form);
         }
         throw new DataIntegrityViolationException("Object already exists in database: " + form.toString());
     }
 
-    public Profile updateProfile(ProfileForm profile) {
-        if (profileExists(profile)) {
-            return saveProfile(profile);
+    public Profile updateProfile(Long profileId, ProfileForm profileForm) {
+        Optional<Profile> optionalProfile = profileRepository.findById(profileId);
+        if (optionalProfile.isPresent()) {
+            Profile profile = optionalProfile.get();
+            profile.setName(profileForm.getName());
+            profile.setDescription(profileForm.getDescription());
+            return profileRepository.save(profile);
         }
-        throw new DataIntegrityViolationException("Object doesn't exists in database: " + profile.toString());
+        throw new DataIntegrityViolationException("Object doesn't exists in database: " + profileForm.toString());
     }
 
-    private boolean profileExists(ProfileForm form) {
-        return profileRepository.findIfExists(form.getName());
-    }
-
-    private Profile saveProfile(ProfileForm form) {
+    private Profile saveNewProfile(ProfileForm form) {
         Profile profile = new Profile();
 
         profile.setName(form.getName());
         profile.setDescription(form.getDescription());
+
 
         profileRepository.save(profile);
 
@@ -61,5 +62,9 @@ public class ProfileService {
         } else {
             return false;
         }
+    }
+
+    private boolean profileExists(ProfileForm form) {
+        return profileRepository.findIfExists(form.getName());
     }
 }

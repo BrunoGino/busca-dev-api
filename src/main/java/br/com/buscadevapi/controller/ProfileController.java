@@ -42,9 +42,9 @@ public class ProfileController {
         return ResponseEntity.created(uri).body(profileDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateProfile(@RequestBody @Valid ProfileForm profileForm) {
-        Profile profile = profileService.updateProfile(profileForm);
+    @PutMapping(value = "/{profileId}")
+    public ResponseEntity<?> updateProfile(@RequestBody @Valid ProfileForm profileForm, @PathVariable Long profileId) {
+        Profile profile = profileService.updateProfile(profileId, profileForm);
 
         if (profile == null) {
             return ResponseEntity.notFound().build();
@@ -53,7 +53,7 @@ public class ProfileController {
     }
 
     @DeleteMapping(value = "/{profileId}")
-    public ResponseEntity<?> deleteProfile(@PathVariable Long profileId){
+    public ResponseEntity<?> deleteProfile(@PathVariable Long profileId) {
         return profileService.delete(profileId) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }

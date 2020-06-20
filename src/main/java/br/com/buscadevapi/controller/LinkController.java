@@ -29,12 +29,12 @@ public class LinkController {
         return LinkDTO.convert(linkService.createLink(linkForm));
     }
 
-    @PutMapping
-    public LinkDTO updateLink(@RequestBody @Valid LinkForm linkForm) {
-        return LinkDTO.convert(linkService.updateLink(linkForm));
+    @PutMapping(value = "/{linkId}")
+    public LinkDTO updateLink(@RequestBody @Valid LinkForm linkForm, @PathVariable Long linkId) {
+        return LinkDTO.convert(linkService.updateLink(linkId, linkForm));
     }
 
-    @DeleteMapping(value = "{/linkId}")
+    @DeleteMapping(value = "/{linkId}")
     public ResponseEntity<?> deleteLink(@PathVariable @NotBlank Long linkId) {
         return linkService.deleteLink(linkId) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }

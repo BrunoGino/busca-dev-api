@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findByProfileType(Pageable pageable, @Param("type") String type);
 
     @Query(value = "SELECT EXISTS( " +
-            "SELECT 1 FROM B_USER EMAIL = :email " +
+            "SELECT 1 FROM B_USER WHERE EMAIL = :email " +
             "LIMIT 1)", nativeQuery = true)
     boolean findIfExistsByEmail(@Param("email") String email);
 }

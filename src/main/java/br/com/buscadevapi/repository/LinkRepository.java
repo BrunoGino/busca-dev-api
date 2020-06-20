@@ -19,4 +19,9 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
             "AND USER_USER_ID = :userId " +
             "LIMIT 1)", nativeQuery = true)
     boolean findIfLinkExists(@Param("link") String link, @Param("linkType") String linkType, @Param("userId") Long userId);
+
+    @Query(value = "SELECT EXISTS( " +
+            "SELECT 1 FROM LINK WHERE LINK_ID = :linkId " +
+            "LIMIT 1)", nativeQuery = true)
+    boolean findIfLinkExistsById(@Param("linkId") Long linkId);
 }

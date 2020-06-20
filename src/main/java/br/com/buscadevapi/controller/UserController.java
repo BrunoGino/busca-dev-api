@@ -1,10 +1,7 @@
 package br.com.buscadevapi.controller;
 
-import br.com.buscadevapi.controller.dto.ProjectDTO;
 import br.com.buscadevapi.controller.dto.UserDTO;
-import br.com.buscadevapi.controller.form.ProjectForm;
 import br.com.buscadevapi.controller.form.UserForm;
-import br.com.buscadevapi.model.Project;
 import br.com.buscadevapi.model.User;
 import br.com.buscadevapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +45,7 @@ public class UserController {
 
     @PutMapping(value = "/{userId}")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserForm userForm, @PathVariable Long userId) {
-        User user = userService.updateUser(userId,userForm);
+        User user = userService.updateUser(userId, userForm);
 
         if (user == null) {
             return ResponseEntity.notFound().build();

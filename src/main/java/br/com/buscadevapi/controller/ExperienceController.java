@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -33,13 +35,22 @@ public class ExperienceController {
     }
 
     @PostMapping
-    public ExperienceDTO createNewExperience(@RequestBody @Valid ExperienceForm experienceForm) {
-        return ExperienceDTO.convert(experienceService.createExperience(experienceForm));
+    public ResponseEntity<ExperienceDTO> createNewExperience(@RequestBody @Valid ExperienceForm experienceForm,
+                                                             UriComponentsBuilder uriComponentsBuilder) {
+        Experience experience = experienceService.createExperience(experienceForm);
+
+        if (experience != null) {
+            ExperienceDTO experienceDTO = ExperienceDTO.convert(experience);
+            URI uri = uriComponentsBuilder.path("/experience/{id}").buildAndExpand(experienceDTO.getId()).toUri();
+            return ResponseEntity.created(uri).body(experienceDTO);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateExperience(@RequestBody @Valid ExperienceForm experienceForm) {
-        Experience experience = experienceService.updateExperience(experienceForm);
+    @PutMapping(value = "/{experienceId}")
+    public ResponseEntity<?> updateExperience(@RequestBody @Valid ExperienceForm experienceForm,
+                                              @PathVariable Long experienceId) {
+        Experience experience = experienceService.updateExperience(experienceId, experienceForm);
         if (experience == null) {
             return ResponseEntity.notFound().build();
         }

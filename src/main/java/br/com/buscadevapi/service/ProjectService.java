@@ -39,9 +39,10 @@ public class ProjectService {
         }
     }
 
-    public Project update(ProjectForm projectForm){
-        if(alreadyExists(projectForm)){
-            Project project = new Project();
+    public Project update(Long profileId, ProjectForm projectForm){
+        Optional<Project> optionalProject = projectRepository.findById(profileId);
+        if(optionalProject.isPresent()){
+            Project project = optionalProject.get();
 
             project.setTitle(projectForm.getTitle());
             project.setDescription(projectForm.getDescription());
@@ -58,47 +59,51 @@ public class ProjectService {
 
             project.setStatus(projectForm.getStatus().toString());
 
-            return saveProject(project);
+            return projectRepository.save(project);
         }
         throw new DataIntegrityViolationException("Object doesn't exists in database: " + projectForm.toString());
     }
 
     public Project createProject(ProjectForm projectForm) {
         if (!alreadyExists(projectForm)) {
-            Project project = new Project();
-
-            project.setTitle(projectForm.getTitle());
-            project.setDescription(projectForm.getDescription());
-            project.setInitialDate(projectForm.getInitialDate());
-            project.setEndingDate(projectForm.getEndingDate());
-
-
-            User owner = userService.getUserById(projectForm.getOwnerId());
-
-            project.setOwner(owner);
-
-            List<String> skillNames = projectForm.getSkillNames();
-            List<Skill> skillsBySkillNames = skillService.getSkillsBySkillNames(skillNames);
-            project.setSkills(skillsBySkillNames);
-
-            project.setStatus(Status.CREATED.getDescription());
-
-            Project savedProject = saveProject(project);
-
-            savedProject.getSkills().forEach(skill -> {
-                if (skill != null) {
-                    skillService.addProjectToSkill(skill.getId(), savedProject.getId());
-                }
-            });
-
-            return savedProject;
+            return saveNewProject(projectForm);
         }
         throw new DataIntegrityViolationException("Object already exists in database: " + projectForm.toString());
+    }
+
+    private Project saveNewProject(ProjectForm projectForm) {
+        Project project = new Project();
+
+        project.setTitle(projectForm.getTitle());
+        project.setDescription(projectForm.getDescription());
+        project.setInitialDate(projectForm.getInitialDate());
+        project.setEndingDate(projectForm.getEndingDate());
+
+
+        User owner = userService.getUserById(projectForm.getOwnerId());
+
+        project.setOwner(owner);
+
+        List<String> skillNames = projectForm.getSkillNames();
+        List<Skill> skillsBySkillNames = skillService.getSkillsBySkillNames(skillNames);
+        project.setSkills(skillsBySkillNames);
+
+        project.setStatus(Status.CREATED.getDescription());
+
+        Project savedProject = saveProject(project);
+
+        savedProject.getSkills().forEach(skill -> {
+            if (skill != null) {
+                skillService.addProjectToSkill(skill.getId(), savedProject.getId());
+            }
+        });
+        return savedProject;
     }
 
     private boolean alreadyExists(ProjectForm projectForm) {
         return projectRepository.findIfExists(projectForm.getTitle());
     }
+
     private Project saveProject(Project project) {
         return projectRepository.save(project);
     }

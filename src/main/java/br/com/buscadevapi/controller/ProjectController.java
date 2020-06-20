@@ -42,9 +42,9 @@ public class ProjectController {
         return ResponseEntity.created(uri).body(projectDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateProject(@RequestBody @Valid ProjectForm projectForm) {
-        Project project = projectService.update(projectForm);
+    @PutMapping(value = "/{projectId}")
+    public ResponseEntity<?> updateProject(@RequestBody @Valid ProjectForm projectForm, @PathVariable Long projectId) {
+        Project project = projectService.update(projectId, projectForm);
 
         if (project == null) {
             return ResponseEntity.notFound().build();
@@ -53,7 +53,7 @@ public class ProjectController {
     }
 
     @DeleteMapping(value = "/{projectId}")
-    public ResponseEntity<?> deleteProfile(@PathVariable Long projectId){
+    public ResponseEntity<?> deleteProfile(@PathVariable Long projectId) {
         return projectService.delete(projectId) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
