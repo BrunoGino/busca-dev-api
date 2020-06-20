@@ -19,5 +19,17 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
             "WHERE SKILL_ID IN :skillIds", nativeQuery = true)
     List<Skill> findSkillsBySkillId(@Param("skillIds") List<Long> skillIds);
 
-    Page<Skill> findByName(String name, Pageable pageable);
+    @Query(value = "SELECT EXISTS( " +
+            "SELECT 1 FROM SKILL NAME = :name " +
+            "LIMIT 1)", nativeQuery = true)
+    boolean findIfExists(@Param("name") String name);
+
+    @Query(value = "SELECT * FROM SKILL " +
+            "WHERE NAME = :name", nativeQuery = true)
+    Skill findByName(@Param("name") String name);
+
+    @Query(value = "SELECT * FROM SKILL " +
+            "WHERE NAME IN(:skillNames) " +
+            "ORDER BY NAME ASC", nativeQuery = true)
+    List<Skill> findByAllSkillNames(List<String> skillNames);
 }

@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -25,16 +27,19 @@ public class ProfileController {
         return ProfileDTO.convertPage(profileService.getAll(pageable));
     }
 
-    @GetMapping(value = "/{profileName}")
-    public ResponseEntity<ProfileDTO> profileByName(@PathVariable String profileName) {
+    @GetMapping("/{profileName}")
+    public ResponseEntity<ProfileDTO> profileByName(@PathVariable("profileName") String profileName) {
         Optional<Profile> profileByName = profileService.getProfileByName(profileName);
         return profileByName.map(profile -> ResponseEntity.ok(ProfileDTO.convert(profile)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ProfileDTO createNewProfile(@RequestBody @Valid ProfileForm profileForm) {
-        return ProfileDTO.convert(profileService.createProfile(profileForm));
+    public ResponseEntity<ProfileDTO> createNewProfile(@RequestBody @Valid ProfileForm profileForm,
+                                                       UriComponentsBuilder uriComponentsBuilder) {
+        ProfileDTO profileDTO = ProfileDTO.convert(profileService.createProfile(profileForm));
+        URI uri = uriComponentsBuilder.path("/profile/{id}").buildAndExpand(profileDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(profileDTO);
     }
 
     @PutMapping
@@ -51,6 +56,4 @@ public class ProfileController {
     public ResponseEntity<?> deleteProfile(@PathVariable Long profileId){
         return profileService.delete(profileId) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
-
-
 }

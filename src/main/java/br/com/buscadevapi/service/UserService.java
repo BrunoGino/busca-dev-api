@@ -1,19 +1,16 @@
 package br.com.buscadevapi.service;
 
-import br.com.buscadevapi.controller.dto.SkillDTO;
 import br.com.buscadevapi.controller.form.UserForm;
-import br.com.buscadevapi.model.Experience;
-import br.com.buscadevapi.model.Link;
-import br.com.buscadevapi.model.Profile;
-import br.com.buscadevapi.model.User;
+import br.com.buscadevapi.model.*;
 import br.com.buscadevapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -36,7 +33,38 @@ public class UserService {
         return userRepository.findById(userId).orElse(new User());
     }
 
-    public User createUser(UserForm form, Pageable pageable) {
+    public User updateUser(Long userId, UserForm userForm) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setFirstName(userForm.getFirstName());
+            user.setLastName(userForm.getLastName());
+            // Needs email validation. Email is an unique property
+            user.setEmail(userForm.getEmail());
+            user.setBirthDate(userForm.getBirthDate());
+            user.setCellphone(userForm.getCellphone());
+            user.setTelephone(userForm.getTelephone());
+
+            List<Skill> skills = skillService.getSkillsBySkillNames(userForm.getSkills());
+            user.setSkills(skills);
+
+            return userRepository.save(user);
+        }
+        throw new DataIntegrityViolationException("Object with ID " + userId + " doesn't exist in database");
+    }
+
+    public User createUser(UserForm form) {
+        if (!alreadyExists(form)) {
+            return createNewUser(form);
+        }
+        throw new DataIntegrityViolationException("Object already exists in database: " + form.toString());
+    }
+
+    private boolean alreadyExists(UserForm form) {
+        return userRepository.findIfExistsByEmail(form.getEmail());
+    }
+
+    private User createNewUser(UserForm form) {
         User user = new User();
         user.setFirstName(form.getFirstName());
         user.setEmail(form.getEmail());
@@ -47,38 +75,37 @@ public class UserService {
         Profile profile = profileService.getProfileByName(form.getProfileName()).get();
         user.setProfile(profile);
 
-        List<Experience> createdExperiences = createUserExperiences(form, pageable, user.getId());
+        List<Experience> createdExperiences = createUserExperiences(form, user.getId());
         user.setExperiences(createdExperiences);
 
-        List<Long> skillIds = form.getSkills().stream().map(SkillDTO::getId).collect(Collectors.toList());
-        user.setSkills(skillService.getSkillsById(skillIds));
+        List<Skill> skills = skillService.getSkillsBySkillNames(form.getSkills());
+        user.setSkills(skills);
 
 
-        List<Link> createdLinks = createUserLinks(form, pageable, user.getId());
+        List<Link> createdLinks = createUserLinks(form, user.getId());
         user.setLinks(createdLinks);
 
-        userRepository.save(user);
-
-        return user;
+        return userRepository.save(user);
     }
 
-    private List<Link> createUserLinks(UserForm form, Pageable pageable, Long userId) {
+    private List<Link> createUserLinks(UserForm form, Long userId) {
         form.getLinks().forEach(linkForm -> {
             linkForm.setUserId(userId);
             linkService.createLink(linkForm);
         });
-        return linkService.getLinksByUser(pageable, userId).getContent();
+        return linkService.getLinksByUser(Pageable.unpaged(), userId).getContent();
     }
 
-    private List<Experience> createUserExperiences(UserForm form, Pageable pageable, Long userId) {
+    private List<Experience> createUserExperiences(UserForm form, Long userId) {
         form.getExperiences().forEach(experienceForm -> {
             experienceForm.setUserId(userId);
             experienceService.createExperience(experienceForm);
         });
-        return experienceService.getExperiencesByUser(pageable, userId).getContent();
+        return experienceService.getExperiencesByUser(Pageable.unpaged(), userId).getContent();
     }
 
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+
 }

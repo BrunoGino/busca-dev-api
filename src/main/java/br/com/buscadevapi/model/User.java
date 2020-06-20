@@ -34,7 +34,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "SKILL_ID")
     )
     private List<Skill> skills;
-    @Column(columnDefinition = "VARCHAR(60)")
+    @Column(columnDefinition = "VARCHAR(60)", unique = true)
     private String email;
     @Column(columnDefinition = "VARCHAR(30)")
     private String cellphone;

@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 @Entity
 @Data
-@NoArgsConstructor
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +25,16 @@ public class Skill {
     @ManyToOne
     @JoinColumn(name = "PROFILE_ID")
     private Profile profile;
+
+    public Skill() {
+        this.projects = new ArrayList<>();
+    }
+
+    public List<Project> getProjects() {
+        return Collections.unmodifiableList(projects);
+    }
+
+    public void addProjectToSkill(Project project) {
+        projects.add(project);
+    }
 }

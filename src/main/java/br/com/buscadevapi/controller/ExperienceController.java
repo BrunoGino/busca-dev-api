@@ -25,7 +25,7 @@ public class ExperienceController {
         return ExperienceDTO.convertPage(experienceService.getExperiencesByUser(pageable, userId));
     }
 
-    @GetMapping(value = "/{experienceId}")
+    @GetMapping("/{experienceId}")
     public ResponseEntity<ExperienceDTO> experienceById(@PathVariable Long experienceId) {
         Optional<Experience> experienceOptional = experienceService.getExperienceById(experienceId);
         return experienceOptional.map(experience -> ResponseEntity.ok(ExperienceDTO.convert(experience)))

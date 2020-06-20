@@ -1,6 +1,9 @@
 package br.com.buscadevapi.controller.form;
 
+import br.com.buscadevapi.controller.dto.ExperienceDTO;
+import br.com.buscadevapi.controller.dto.LinkDTO;
 import br.com.buscadevapi.controller.dto.SkillDTO;
+import br.com.buscadevapi.model.Experience;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -15,6 +18,9 @@ public class UserForm {
     @Length(max = 50)
     private String firstName;
     @NotBlank
+    @Length(max = 50)
+    private String lastName;
+    @NotBlank
     @Length(max = 60)
     private String email;
     @NotNull
@@ -27,7 +33,7 @@ public class UserForm {
     private String telephone;
     @NotNull
     private String profileName;
-    private List<SkillDTO> skills;
+    private List<String> skills;
     private List<ExperienceForm> experiences;
     private List<LinkForm> links;
 

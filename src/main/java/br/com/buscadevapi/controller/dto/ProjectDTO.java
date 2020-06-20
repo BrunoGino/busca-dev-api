@@ -40,4 +40,8 @@ public class ProjectDTO {
     public static Page<ProjectDTO> convertPage(Page<Project> projects) {
         return projects.map(ProjectDTO::new);
     }
+
+    public static ProjectDTO convert(Project project) {
+        return new ProjectDTO(project);
+    }
 }
