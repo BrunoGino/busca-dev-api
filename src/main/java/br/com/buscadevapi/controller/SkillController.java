@@ -7,6 +7,7 @@ import br.com.buscadevapi.model.Skill;
 import br.com.buscadevapi.service.ProfileService;
 import br.com.buscadevapi.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -47,18 +48,23 @@ public class SkillController {
     @PostMapping
     public ResponseEntity<?> createSkill(@RequestBody @Valid SkillForm skillForm,
                                          UriComponentsBuilder uriComponentsBuilder) {
-        SkillDTO skillDTO = new SkillDTO(skillService.createSkill(skillForm));
-        URI uri = uriComponentsBuilder.path("/skill/{id}").buildAndExpand(skillDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(skillDTO);
+        try {
+            SkillDTO skillDTO = new SkillDTO(skillService.createSkill(skillForm));
+            URI uri = uriComponentsBuilder.path("/skill/{id}").buildAndExpand(skillDTO.getId()).toUri();
+            return ResponseEntity.created(uri).body(skillDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping(value = "/{skillId}")
     public ResponseEntity<?> updateSkill(@RequestBody @Valid SkillForm skillForm, @PathVariable Long skillId) {
-        Skill updatedSkill = skillService.updateSkill(skillId, skillForm);
-        if (updatedSkill == null) {
+        try {
+            Skill updatedSkill = skillService.updateSkill(skillId, skillForm);
+            return ResponseEntity.ok(new SkillDTO(updatedSkill));
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new SkillDTO(updatedSkill));
     }
 
     private Page<SkillDTO> getSkillsByProfileName(String profileName, Pageable pageable) {

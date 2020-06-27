@@ -30,26 +30,30 @@ public class ProfileController {
     @GetMapping("/{profileName}")
     public ResponseEntity<ProfileDTO> profileByName(@PathVariable("profileName") String profileName) {
         Optional<Profile> profileByName = profileService.getProfileByName(profileName);
-        return profileByName.map(profile -> ResponseEntity.ok(ProfileDTO.convert(profile)))
+        return profileByName.map(profile -> ResponseEntity.ok(new ProfileDTO(profile)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ProfileDTO> createNewProfile(@RequestBody @Valid ProfileForm profileForm,
-                                                       UriComponentsBuilder uriComponentsBuilder) {
-        ProfileDTO profileDTO = ProfileDTO.convert(profileService.createProfile(profileForm));
-        URI uri = uriComponentsBuilder.path("/profile/{id}").buildAndExpand(profileDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(profileDTO);
+    public ResponseEntity<?> createNewProfile(@RequestBody @Valid ProfileForm profileForm,
+                                              UriComponentsBuilder uriComponentsBuilder) {
+        try {
+            ProfileDTO profileDTO = new ProfileDTO(profileService.createProfile(profileForm));
+            URI uri = uriComponentsBuilder.path("/profile/{id}").buildAndExpand(profileDTO.getId()).toUri();
+            return ResponseEntity.created(uri).body(profileDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping(value = "/{profileId}")
     public ResponseEntity<?> updateProfile(@RequestBody @Valid ProfileForm profileForm, @PathVariable Long profileId) {
-        Profile profile = profileService.updateProfile(profileId, profileForm);
-
-        if (profile == null) {
+        try {
+            Profile profile = profileService.updateProfile(profileId, profileForm);
+            return ResponseEntity.ok(new ProfileDTO(profile));
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ProfileDTO.convert(profile));
     }
 
     @DeleteMapping(value = "/{profileId}")

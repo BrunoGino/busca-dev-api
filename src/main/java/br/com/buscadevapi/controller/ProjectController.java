@@ -35,21 +35,25 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectDTO> create(@RequestBody @Valid ProjectForm projectForm,
-                                             UriComponentsBuilder uriComponentsBuilder) {
-        ProjectDTO projectDTO = new ProjectDTO(projectService.createProject(projectForm));
-        URI uri = uriComponentsBuilder.path("/project/{id}").buildAndExpand(projectDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(projectDTO);
+    public ResponseEntity<?> create(@RequestBody @Valid ProjectForm projectForm,
+                                    UriComponentsBuilder uriComponentsBuilder) {
+        try {
+            ProjectDTO projectDTO = new ProjectDTO(projectService.createProject(projectForm));
+            URI uri = uriComponentsBuilder.path("/project/{id}").buildAndExpand(projectDTO.getId()).toUri();
+            return ResponseEntity.created(uri).body(projectDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping(value = "/{projectId}")
     public ResponseEntity<?> updateProject(@RequestBody @Valid ProjectForm projectForm, @PathVariable Long projectId) {
-        Project project = projectService.update(projectId, projectForm);
-
-        if (project == null) {
+        try {
+            Project project = projectService.update(projectId, projectForm);
+            return ResponseEntity.ok(new ProjectDTO(project));
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ProjectDTO.convert(project));
     }
 
     @DeleteMapping(value = "/{projectId}")

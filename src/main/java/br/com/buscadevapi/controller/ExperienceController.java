@@ -30,31 +30,32 @@ public class ExperienceController {
     @GetMapping("/{experienceId}")
     public ResponseEntity<ExperienceDTO> experienceById(@PathVariable Long experienceId) {
         Optional<Experience> experienceOptional = experienceService.getExperienceById(experienceId);
-        return experienceOptional.map(experience -> ResponseEntity.ok(ExperienceDTO.convert(experience)))
+        return experienceOptional.map(experience -> ResponseEntity.ok(new ExperienceDTO(experience)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<ExperienceDTO> createNewExperience(@RequestBody @Valid ExperienceForm experienceForm,
                                                              UriComponentsBuilder uriComponentsBuilder) {
-        Experience experience = experienceService.createExperience(experienceForm);
-
-        if (experience != null) {
-            ExperienceDTO experienceDTO = ExperienceDTO.convert(experience);
+        try {
+            Experience experience = experienceService.createExperience(experienceForm);
+            ExperienceDTO experienceDTO = new ExperienceDTO(experience);
             URI uri = uriComponentsBuilder.path("/experience/{id}").buildAndExpand(experienceDTO.getId()).toUri();
             return ResponseEntity.created(uri).body(experienceDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.badRequest().build();
     }
 
     @PutMapping(value = "/{experienceId}")
     public ResponseEntity<?> updateExperience(@RequestBody @Valid ExperienceForm experienceForm,
                                               @PathVariable Long experienceId) {
-        Experience experience = experienceService.updateExperience(experienceId, experienceForm);
-        if (experience == null) {
+        try {
+            Experience experience = experienceService.updateExperience(experienceId, experienceForm);
+            return ResponseEntity.ok(new ExperienceDTO(experience));
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ExperienceDTO.convert(experience));
     }
 
     @DeleteMapping(value = "/{experienceId}")

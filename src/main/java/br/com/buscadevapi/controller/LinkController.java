@@ -2,6 +2,7 @@ package br.com.buscadevapi.controller;
 
 import br.com.buscadevapi.controller.dto.LinkDTO;
 import br.com.buscadevapi.controller.form.LinkForm;
+import br.com.buscadevapi.model.Link;
 import br.com.buscadevapi.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/link")
@@ -25,13 +28,26 @@ public class LinkController {
     }
 
     @PostMapping
-    public LinkDTO createNewLink(@RequestBody @Valid LinkForm linkForm) {
-        return LinkDTO.convert(linkService.createLink(linkForm));
+    public ResponseEntity<?> createNewLink(@RequestBody @Valid LinkForm linkForm, UriComponentsBuilder uriComponentsBuilder) {
+        try {
+            Link link = linkService.createLink(linkForm);
+            LinkDTO linkDTO = new LinkDTO(link);
+            URI uri = uriComponentsBuilder.path("/user/{id}").buildAndExpand(linkDTO.getId()).toUri();
+            return ResponseEntity.created(uri).body(linkDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping(value = "/{linkId}")
-    public LinkDTO updateLink(@RequestBody @Valid LinkForm linkForm, @PathVariable Long linkId) {
-        return LinkDTO.convert(linkService.updateLink(linkId, linkForm));
+    public ResponseEntity<?> updateLink(@RequestBody @Valid LinkForm linkForm, @PathVariable Long linkId) {
+        try {
+            Link link = linkService.updateLink(linkId, linkForm);
+            LinkDTO linkDTO = new LinkDTO(link);
+            return ResponseEntity.ok(linkDTO);
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping(value = "/{linkId}")

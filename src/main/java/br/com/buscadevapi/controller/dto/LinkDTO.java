@@ -24,8 +24,4 @@ public class LinkDTO {
     public static Page<LinkDTO> convertPage(Page<Link> linksByUser) {
         return linksByUser.map(LinkDTO::new);
     }
-
-    public static LinkDTO convert(Link link) {
-        return new LinkDTO(link);
-    }
 }

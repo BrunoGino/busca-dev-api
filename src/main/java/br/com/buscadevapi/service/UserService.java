@@ -29,8 +29,8 @@ public class UserService {
         return userRepository.findByProfileType(pageable, profileType.toUpperCase());
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElse(new User());
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
     public User updateUser(Long userId, UserForm userForm) {

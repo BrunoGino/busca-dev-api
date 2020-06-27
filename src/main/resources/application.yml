@@ -2,8 +2,9 @@ spring:
   boot:
     admin:
       client:
-        url: https://busca-dev-admin.herokuapp.com/
+        url: http://localhost:8081
 
+#https://busca-dev-admin.herokuapp.com/
   datasource:
     initialization-mode: always
     url: jdbc:postgresql://ec2-34-194-198-176.compute-1.amazonaws.com:5432/db0q6f683mn7q6

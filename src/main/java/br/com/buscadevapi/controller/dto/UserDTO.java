@@ -41,8 +41,4 @@ public class UserDTO {
         return users.map(UserDTO::new);
     }
 
-    public static UserDTO convert(User user) {
-        return new UserDTO(user);
-    }
-
 }

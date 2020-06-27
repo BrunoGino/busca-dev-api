@@ -36,8 +36,4 @@ public class ExperienceDTO {
     public static List<ExperienceDTO> convertList(List<Experience> experiences) {
         return experiences.stream().map(ExperienceDTO::new).collect(Collectors.toList());
     }
-
-    public static ExperienceDTO convert(Experience experience) {
-        return new ExperienceDTO(experience);
-    }
 }

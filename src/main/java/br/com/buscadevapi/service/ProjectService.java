@@ -41,7 +41,8 @@ public class ProjectService {
 
     public Project update(Long profileId, ProjectForm projectForm){
         Optional<Project> optionalProject = projectRepository.findById(profileId);
-        if(optionalProject.isPresent()){
+        Optional<User> owner = userService.getUserById(projectForm.getOwnerId());
+        if(optionalProject.isPresent() && owner.isPresent()){
             Project project = optionalProject.get();
 
             project.setTitle(projectForm.getTitle());
@@ -49,9 +50,7 @@ public class ProjectService {
             project.setInitialDate(projectForm.getInitialDate());
             project.setEndingDate(projectForm.getEndingDate());
 
-            User owner = userService.getUserById(projectForm.getOwnerId());
-
-            project.setOwner(owner);
+            project.setOwner(owner.get());
 
             List<String> skillNames = projectForm.getSkillNames();
             List<Skill> skillsBySkillNames = skillService.getSkillsBySkillNames(skillNames);
@@ -65,31 +64,24 @@ public class ProjectService {
     }
 
     public Project createProject(ProjectForm projectForm) {
-        if (!alreadyExists(projectForm)) {
-            return saveNewProject(projectForm);
+        Optional<User> owner = userService.getUserById(projectForm.getOwnerId());
+        if (!alreadyExists(projectForm) && owner.isPresent()) {
+            return saveNewProject(projectForm, owner.get());
         }
         throw new DataIntegrityViolationException("Object already exists in database: " + projectForm.toString());
     }
 
-    private Project saveNewProject(ProjectForm projectForm) {
+    private Project saveNewProject(ProjectForm projectForm, User owner) {
         Project project = new Project();
-
         project.setTitle(projectForm.getTitle());
         project.setDescription(projectForm.getDescription());
         project.setInitialDate(projectForm.getInitialDate());
         project.setEndingDate(projectForm.getEndingDate());
-
-
-        User owner = userService.getUserById(projectForm.getOwnerId());
-
         project.setOwner(owner);
-
         List<String> skillNames = projectForm.getSkillNames();
         List<Skill> skillsBySkillNames = skillService.getSkillsBySkillNames(skillNames);
         project.setSkills(skillsBySkillNames);
-
         project.setStatus(Status.CREATED.getDescription());
-
         Project savedProject = saveProject(project);
 
         savedProject.getSkills().forEach(skill -> {

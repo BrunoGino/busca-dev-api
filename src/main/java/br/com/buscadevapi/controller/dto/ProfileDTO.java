@@ -23,8 +23,4 @@ public class ProfileDTO {
     public static Page<ProfileDTO> convertPage(Page<Profile> profiles) {
         return profiles.map(ProfileDTO::new);
     }
-
-    public static ProfileDTO convert(Profile profileByName) {
-        return new ProfileDTO(profileByName);
-    }
 }
