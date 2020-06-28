@@ -23,7 +23,7 @@ public class ExperienceController {
     private ExperienceService experienceService;
 
     @GetMapping
-    public Page<ExperienceDTO> allExperiencesByUser(@PageableDefault Pageable pageable, @RequestParam Long userId) {
+    public Page<ExperienceDTO> allExperiencesByUser(@PageableDefault Pageable pageable, @RequestParam String userId) {
         return ExperienceDTO.convertPage(experienceService.getExperiencesByUser(pageable, userId));
     }
 

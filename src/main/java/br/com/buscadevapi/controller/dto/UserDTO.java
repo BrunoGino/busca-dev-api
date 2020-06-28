@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Value
 public class UserDTO {
     @JsonIgnore
-    private Long id;
+    private String id;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
@@ -25,7 +25,7 @@ public class UserDTO {
     private List<ExperienceDTO> experiences;
 
     public UserDTO(User user) {
-        this.id = user.getId();
+        this.id = user.getUserId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.birthDate = user.getBirthDate();

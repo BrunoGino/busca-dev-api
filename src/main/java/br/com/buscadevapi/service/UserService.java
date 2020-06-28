@@ -29,11 +29,11 @@ public class UserService {
         return userRepository.findByProfileType(pageable, profileType.toUpperCase());
     }
 
-    public Optional<User> getUserById(Long userId) {
+    public Optional<User> getUserById(String userId) {
         return userRepository.findById(userId);
     }
 
-    public User updateUser(Long userId, UserForm userForm) {
+    public User updateUser(String userId, UserForm userForm) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -75,20 +75,20 @@ public class UserService {
         Profile profile = profileService.getProfileByName(form.getProfileName()).get();
         user.setProfile(profile);
 
-        List<Experience> createdExperiences = createUserExperiences(form, user.getId());
+        List<Experience> createdExperiences = createUserExperiences(form, user.getUserId());
         user.setExperiences(createdExperiences);
 
         List<Skill> skills = skillService.getSkillsBySkillNames(form.getSkills());
         user.setSkills(skills);
 
 
-        List<Link> createdLinks = createUserLinks(form, user.getId());
+        List<Link> createdLinks = createUserLinks(form, user.getUserId());
         user.setLinks(createdLinks);
 
         return userRepository.save(user);
     }
 
-    private List<Link> createUserLinks(UserForm form, Long userId) {
+    private List<Link> createUserLinks(UserForm form, String userId) {
         form.getLinks().forEach(linkForm -> {
             linkForm.setUserId(userId);
             linkService.createLink(linkForm);
@@ -96,7 +96,7 @@ public class UserService {
         return linkService.getLinksByUser(Pageable.unpaged(), userId).getContent();
     }
 
-    private List<Experience> createUserExperiences(UserForm form, Long userId) {
+    private List<Experience> createUserExperiences(UserForm form, String userId) {
         form.getExperiences().forEach(experienceForm -> {
             experienceForm.setUserId(userId);
             experienceService.createExperience(experienceForm);

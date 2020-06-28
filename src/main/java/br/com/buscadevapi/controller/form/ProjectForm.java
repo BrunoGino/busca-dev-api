@@ -14,6 +14,6 @@ public class ProjectForm {
     private LocalDate endingDate;
     private List<String> skillNames;
     private Status status;
-    private Long ownerId;
+    private String ownerId;
 
 }

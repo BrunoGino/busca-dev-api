@@ -14,5 +14,5 @@ public class LinkForm {
 	private String linkType;
 	@NotBlank @Length(max = 70)
 	private String link;
-	private Long userId;
+	private String userId;
 }

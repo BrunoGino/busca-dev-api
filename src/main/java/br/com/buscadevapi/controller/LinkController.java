@@ -23,7 +23,7 @@ public class LinkController {
     private LinkService linkService;
 
     @GetMapping
-    public Page<LinkDTO> allLinksByUser(@PageableDefault Pageable pageable, @RequestParam Long userId) {
+    public Page<LinkDTO> allLinksByUser(@PageableDefault Pageable pageable, @RequestParam String userId) {
         return LinkDTO.convertPage(linkService.getLinksByUser(pageable, userId));
     }
 

@@ -13,17 +13,17 @@ public interface ExperienceRepository extends JpaRepository<Experience, Long> {
     @Query(value = "SELECT * FROM EXPERIENCE " +
             "WHERE USER_USER_ID = :id " +
             "ORDER BY END_DATE ASC", nativeQuery = true)
-    Page<Experience> findAllByUserId(Pageable pageable, @Param("id") Long id);
+    Page<Experience> findAllByUserId(Pageable pageable, @Param("id") String id);
 
     @Query(value = "SELECT EXISTS( " +
             "SELECT 1 FROM EXPERIENCE WHERE USER_USER_ID = :userId " +
             "AND EXPERIENCE_ID = :experienceId " +
             "LIMIT 1)", nativeQuery = true)
-    boolean findIfExists(@Param("experienceId") Long experienceId, @Param("userId") Long userId);
+    boolean findIfExists(@Param("experienceId") Long experienceId, @Param("userId") String userId);
 
     @Query(value = "SELECT EXISTS( " +
             "SELECT 1 FROM EXPERIENCE WHERE USER_USER_ID=:userId " +
             "AND TITLE=:experienceTitle " +
             "LIMIT 1)", nativeQuery = true)
-    boolean findIfExistsByTitleAndUser(@Param("experienceTitle") String experienceTitle, @Param("userId") Long userId);
+    boolean findIfExistsByTitleAndUser(@Param("experienceTitle") String experienceTitle, @Param("userId") String userId);
 }

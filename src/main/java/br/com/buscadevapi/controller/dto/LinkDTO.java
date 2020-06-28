@@ -12,13 +12,13 @@ public class LinkDTO {
     private String type;
     private String link;
     @JsonIgnore
-    private Long userId;
+    private String userId;
 
     public LinkDTO(Link link) {
         this.id = link.getId();
         this.type = link.getLinkType().toString();
         this.link = link.getLink();
-        this.userId = link.getUser().getId();
+        this.userId = link.getUser().getUserId();
     }
 
     public static Page<LinkDTO> convertPage(Page<Link> linksByUser) {

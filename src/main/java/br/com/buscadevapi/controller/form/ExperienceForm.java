@@ -21,5 +21,5 @@ public class ExperienceForm {
 	private LocalDate initialDate;
 	@NotNull
 	private LocalDate endDate;
-	private Long userId;
+	private String userId;
 }

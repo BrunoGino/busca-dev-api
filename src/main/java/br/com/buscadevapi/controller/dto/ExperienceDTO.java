@@ -18,7 +18,7 @@ public class ExperienceDTO {
     private LocalDate initialDate;
     private LocalDate endDate;
     @JsonIgnore
-    private Long userId;
+    private String userId;
 
     public ExperienceDTO(Experience experience) {
         this.id = experience.getId();
@@ -26,7 +26,7 @@ public class ExperienceDTO {
         this.description = experience.getDescription();
         this.initialDate = experience.getInitialDate();
         this.endDate = experience.getEndDate();
-        this.userId = experience.getUser().getId();
+        this.userId = experience.getUser().getUserId();
     }
 
     public static Page<ExperienceDTO> convertPage(Page<Experience> experiences) {

@@ -20,12 +20,12 @@ public class ExperienceService {
     @Autowired
     private UserRepository userRepository;
 
-    public Page<Experience> getExperiencesByUser(Pageable pageable, Long userId) {
+    public Page<Experience> getExperiencesByUser(Pageable pageable, String userId) {
         return experienceRepository.findAllByUserId(pageable, userId);
     }
 
     public Experience createExperience(ExperienceForm form) {
-        Long userId = form.getUserId();
+        String userId = form.getUserId();
         String title = form.getTitle();
         if (!experienceExists(title, userId)) {
             return saveNewExperience(form);
@@ -74,7 +74,7 @@ public class ExperienceService {
         return experienceRepository.findById(experienceId);
     }
 
-    private boolean experienceExists(String experienceTitle, Long userId) {
+    private boolean experienceExists(String experienceTitle, String userId) {
         return experienceRepository.findIfExistsByTitleAndUser(experienceTitle, userId);
     }
 

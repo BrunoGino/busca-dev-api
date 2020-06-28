@@ -21,7 +21,7 @@ public class LinkService {
     private UserRepository userRepository;
 
 
-    public Page<Link> getLinksByUser(Pageable pageable, Long userId) {
+    public Page<Link> getLinksByUser(Pageable pageable, String userId) {
         return linkRepository.findPagedLinksByUser(pageable, userId);
     }
 

@@ -24,7 +24,7 @@ public class ProjectDTO {
     private String description;
     private List<String> skills;
     private String status;
-    private Long ownerId;
+    private String ownerId;
 
     public ProjectDTO(Project project) {
         this.id = project.getId();
@@ -34,7 +34,7 @@ public class ProjectDTO {
         this.description = project.getDescription();
         this.skills = project.getSkills().stream().map(Skill::getName).collect(Collectors.toList());
         this.status = project.getStatus();
-        this.ownerId = project.getOwner().getId();
+        this.ownerId = project.getOwner().getUserId();
     }
 
     public static Page<ProjectDTO> convertPage(Page<Project> projects) {

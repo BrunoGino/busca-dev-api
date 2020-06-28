@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> userById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> userById(@PathVariable String id) {
         Optional<User> userById = userService.getUserById(id);
         return userById.map(user -> ResponseEntity.ok(new UserDTO(user)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{userId}")
-    public ResponseEntity<?> updateUser(@RequestBody @Valid UserForm userForm, @PathVariable Long userId) {
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UserForm userForm, @PathVariable String userId) {
         try {
             User user = userService.updateUser(userId, userForm);
             return ResponseEntity.ok(new UserDTO(user));

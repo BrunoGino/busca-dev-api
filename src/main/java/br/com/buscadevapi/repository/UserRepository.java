@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
 
     @Query(value = "SELECT * FROM B_USER U "
             + "INNER JOIN PROFILE P ON (P.PROFILE_ID = U.PROFILE_PROFILE_ID) " +
