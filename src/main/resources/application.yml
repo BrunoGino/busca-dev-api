@@ -6,7 +6,7 @@ spring:
 
 #https://busca-dev-admin.herokuapp.com/
   datasource:
-    initialization-mode: always
+
     url: jdbc:postgresql://ec2-34-194-198-176.compute-1.amazonaws.com:5432/db0q6f683mn7q6
     username: zszybajbjygmsq
     password: 9809fdd41521f5acd508e99f8020a1d5781518782fecddd8b1f671b1b7bfd72a
