@@ -81,7 +81,6 @@ public class UserService {
         List<Skill> skills = skillService.getSkillsBySkillNames(form.getSkills());
         user.setSkills(skills);
 
-
         List<Link> createdLinks = createUserLinks(form, user.getUserId());
         user.setLinks(createdLinks);
 

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 public class UserProjectLikeKey implements Serializable {
     @Column(name = "USER_ID")
-    private Long developerId;
+    private String developerId;
     @Column(name = "PROJECT_ID")
     private Long projectId;
 }
